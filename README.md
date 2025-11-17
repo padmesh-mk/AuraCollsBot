@@ -57,7 +57,7 @@ git clone https://github.com/YOUR_USERNAME/AuraColls.git
 cd AuraColls
 ````
 
-### 2. Create `config.json` for bot token
+### 2. Create `.env` for bot token
 
 ```json
 {
