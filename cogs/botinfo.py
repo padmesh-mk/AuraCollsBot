@@ -67,7 +67,11 @@ class BotInfo(commands.Cog):
         view = discord.ui.View()
         view.add_item(discord.ui.Button(label="Invite AuraColls", url="https://discord.com/oauth2/authorize?client_id=1261363542867578910"))
         view.add_item(discord.ui.Button(label="Support Server", url="https://discord.gg/becvfQ9fCr"))
+<<<<<<< HEAD
         view.add_item(discord.ui.Button(label="Top.gg Profile", url="https://top.gg/bot/1261363542867578910"))
+=======
+        view.add_item(discord.ui.Button(label="Top.gg Profile", url="https://discord.gg/becvfQ9fCr"))
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         view.add_item(discord.ui.Button(label="Terms of Service", url="https://www.termsfeed.com/live/24ce705f-6734-4237-881f-18d31fb526ea"))
         view.add_item(discord.ui.Button(label="Privacy Policy", url="https://www.termsfeed.com/live/eb76629d-fcc2-4c31-b72f-905b9ad42024"))
         return view

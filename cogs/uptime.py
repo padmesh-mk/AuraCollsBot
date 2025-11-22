@@ -2,7 +2,11 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 from datetime import datetime, timezone
+<<<<<<< HEAD
 import psutil
+=======
+import psutil  # ✅ Required for RAM/CPU stats
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
 class Uptime(commands.Cog):
     def __init__(self, bot):
@@ -18,8 +22,13 @@ class Uptime(commands.Cog):
 
     def get_usage(self):
         process = psutil.Process()
+<<<<<<< HEAD
         ram = process.memory_info().rss / (1024 ** 2) 
         cpu = process.cpu_percent(interval=0.5) 
+=======
+        ram = process.memory_info().rss / (1024 ** 2)  # in MB
+        cpu = process.cpu_percent(interval=0.5)  # in %
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         return round(ram, 2), round(cpu, 1)
 
     def build_embed(self):
@@ -49,4 +58,8 @@ class Uptime(commands.Cog):
 
 async def setup(bot):
     bot.start_time = getattr(bot, 'start_time', datetime.now(timezone.utc))
+<<<<<<< HEAD
     await bot.add_cog(Uptime(bot))
+=======
+    await bot.add_cog(Uptime(bot))
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47

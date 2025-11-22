@@ -24,9 +24,13 @@ def get_collectible_details(coll):
 
 
 def get_user_counts(user_id):
+<<<<<<< HEAD
     with open("collectibles.json", "r") as f:
         data = json.load(f)
     return data.get(str(user_id), {})
+=======
+    return user_collectibles.get(str(user_id), {})
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
 
 def get_filtered_collectibles(user1, user2, filter_type):
@@ -132,7 +136,11 @@ class CompareCollectibles(commands.Cog):
 
     @app_commands.command(name="compare", description="Compare collectibles with another user.")
     async def compare_slash(self, interaction: discord.Interaction, member: discord.Member):
+<<<<<<< HEAD
         await interaction.response.send_message("Loading comparison...")
+=======
+        await interaction.response.send_message("Loading comparison...", ephemeral=True)
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         await self.send_compare_embed(interaction, interaction.user, member, 0, "owned")
 
     @commands.command(name="compare")

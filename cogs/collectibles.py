@@ -3,6 +3,7 @@ from discord.ext import commands
 import json
 import os
 import time
+<<<<<<< HEAD
 from datetime import datetime
 
 COLL_FILE = "collectibles.json"
@@ -13,6 +14,14 @@ POINTS_FILE = "coins.json"
 PREMIUM_FILE = "premium.json"
 REMINDER_FILE = "remindercooldown.json"
 
+=======
+
+COLL_FILE = "collectibles.json"
+TRADABLE_COLL_FILE = "tradablecoll.json"
+USER_COOLDOWNS = {}  # Stores cooldowns in the format: {"user_id:coll": timestamp}
+COLL_LOG_FILE = "coll_logs.json"
+POINTS_FILE = "points.json"
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
 def log_collectible(sender_id, sender_name, target_id, target_name, collectible):
     log_entry = {
@@ -31,7 +40,10 @@ def log_collectible(sender_id, sender_name, target_id, target_name, collectible)
     with open(COLL_LOG_FILE, "w") as f:
         json.dump(logs, f, indent=4)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 def load_tradable_colls():
     if not os.path.exists(TRADABLE_COLL_FILE):
         with open(TRADABLE_COLL_FILE, "w") as f:
@@ -39,7 +51,10 @@ def load_tradable_colls():
     with open(TRADABLE_COLL_FILE, "r") as f:
         return json.load(f)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 def get_data():
     if not os.path.exists(COLL_FILE):
         with open(COLL_FILE, "w") as f:
@@ -47,11 +62,15 @@ def get_data():
     with open(COLL_FILE, "r") as f:
         return json.load(f)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 def save_data(data):
     with open(COLL_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
+<<<<<<< HEAD
 
 def load_json(filename):
     if not os.path.exists(filename):
@@ -82,17 +101,25 @@ def is_premium(user_id: int) -> bool:
 
 
 def add_point(user_id, premium=False):
+=======
+def add_point(user_id):
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
     try:
         with open(POINTS_FILE, "r") as f:
             points_data = json.load(f)
     except FileNotFoundError:
         points_data = {}
 
+<<<<<<< HEAD
     points_data[str(user_id)] = points_data.get(str(user_id), 0) + (2 if premium else 1)
+=======
+    points_data[str(user_id)] = points_data.get(str(user_id), 0) + 1
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
     with open(POINTS_FILE, "w") as f:
         json.dump(points_data, f, indent=4)
 
+<<<<<<< HEAD
 def load_reminders():
     if not os.path.exists(REMINDER_FILE):
         with open(REMINDER_FILE, "w") as f:
@@ -105,6 +132,8 @@ def save_reminders(data):
         json.dump(data, f, indent=4)
 
 
+=======
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 class Collectibles(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -130,6 +159,7 @@ class Collectibles(commands.Cog):
         if collectible not in self.tradable_colls:
             return await ctx.reply("Unknown collectible!", delete_after=3)
 
+<<<<<<< HEAD
         premium = is_premium(sender.id)
 
         cooldown_duration = self.tradable_colls[collectible].get("cooldown", 0)
@@ -143,22 +173,38 @@ class Collectibles(commands.Cog):
                     f"**⏱ | {sender.display_name}**! Slow down and try the command again **<t:{retry_after}:R>**",
                     delete_after=retry_after - now
                 )
+=======
+        cooldown_duration = self.tradable_colls[collectible].get("cooldown", 0)
+        key = f"{sender.id}:{collectible}"
+        now = int(time.time())
+        if key in USER_COOLDOWNS and now < USER_COOLDOWNS[key]:
+            retry_after = USER_COOLDOWNS[key]
+            return await ctx.reply(
+                f"**⏱ | {sender.name}**! Slow down and try the command again **<t:{retry_after}:R>**",
+                delete_after=retry_after - now
+            )
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
         data = get_data()
         data = self.ensure_user(data, sender.id)
         data = self.ensure_user(data, target.id)
 
         if data[str(sender.id)][collectible] < 1:
+<<<<<<< HEAD
             await ctx.reply(
                 f"**<:ap_crossmark:1382760353904988230> | {sender.display_name}**, you do not have any {collectible}s! >:c",
                 delete_after=3
             )
+=======
+            await ctx.reply(f"**<:ap_crossmark:1382760353904988230> | {sender.name}**, you do not have any {collectible}s! >:c", delete_after=3)
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
             return await ctx.message.delete(delay=3)
 
         data[str(sender.id)][collectible] -= 1
         data[str(target.id)][collectible] += 2
         save_data(data)
 
+<<<<<<< HEAD
         if not premium:
             USER_COOLDOWNS[key] = now + cooldown_duration
             reminders = load_reminders()
@@ -183,6 +229,16 @@ class Collectibles(commands.Cog):
         name = self.tradable_colls[collectible]["name"]
 
         await ctx.send(f"{emoji} **| {sender.display_name}** sent **{target.name}** 2 {name}!")
+=======
+        USER_COOLDOWNS[key] = now + cooldown_duration
+
+        log_collectible(sender.id, sender.name, target.id, target.name, collectible)
+        add_point(sender.id)  # ➕ Add point to sender
+
+        emoji = self.tradable_colls[collectible]["emoji"]
+        name = self.tradable_colls[collectible]["name"]
+        await ctx.send(f"{emoji} **| {sender.name}** sent **{target.name}** 2 {name}!")
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
     def _create_command(self, collectible_key):
         @commands.command(name=collectible_key)
@@ -195,12 +251,19 @@ class Collectibles(commands.Cog):
                 amount = data[str(sender.id)].get(collectible_key, 0)
                 emoji = self.tradable_colls[collectible_key]["emoji"]
                 name = self.tradable_colls[collectible_key]["name"]
+<<<<<<< HEAD
                 return await ctx.reply(f"{emoji} **| {sender.display_name}**, you currently have {amount} {name}!")
+=======
+                return await ctx.reply(f"{emoji} **| {sender.name}**, you currently have {amount} {name}!")
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
             await self.send_collectible(ctx, collectible_key, target)
 
         return _command
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 async def setup(bot):
     await bot.add_cog(Collectibles(bot))

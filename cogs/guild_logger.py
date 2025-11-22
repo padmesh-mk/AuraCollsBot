@@ -1,7 +1,11 @@
 import discord
 from discord.ext import commands
 
+<<<<<<< HEAD
 LOG_CHANNEL_ID = 1398017169375101088
+=======
+LOG_CHANNEL_ID = 1398017169375101088  # Replace with your actual log channel ID
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
 class GuildLogger(commands.Cog):
     def __init__(self, bot):
@@ -13,6 +17,10 @@ class GuildLogger(commands.Cog):
             owner = await self.bot.fetch_user(guild.owner_id)
             owner_text = f"{owner} (`{owner.id}`)"
 
+<<<<<<< HEAD
+=======
+            # DM the server owner
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
             try:
                 dm_embed = discord.Embed(
                     title=f"<a:ap_bot:1382718727568756857> Thanks for Adding {self.bot.user.name}!",
@@ -21,7 +29,11 @@ class GuildLogger(commands.Cog):
 						"<:ap_developer:1382719599283408916> Developer: <@941902212303556618> `bmtamilgaming_yt` \n\n"
                         "Here’s some helpful info to get started:"
                     ),
+<<<<<<< HEAD
                     color=0xff7800 
+=======
+                    color=0xff7800  # Orange color
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
                 )
                 dm_embed.add_field(name="<a:ap_arroworange:1382746363208667146> Help Command", value="Use `ahelp` to view all commands.", inline=False)
                 dm_embed.add_field(name="<:ap_support:1382716862256910437> Support Server", value="[Join Support Server](https://discord.gg/becvfQ9fCr)", inline=False)
@@ -37,6 +49,10 @@ class GuildLogger(commands.Cog):
         except discord.HTTPException:
             owner_text = f"Unknown (`{guild.owner_id}`)"
 
+<<<<<<< HEAD
+=======
+        # Log to log channel
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         embed = discord.Embed(
             title="📥 Joined a New Server!",
             description=f"**Server Name:** {guild.name}\n**Members:** {guild.member_count}",

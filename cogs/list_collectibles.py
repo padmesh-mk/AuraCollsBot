@@ -17,12 +17,19 @@ def load_json(filename):
         return json.load(f)
 
 class CollListView(discord.ui.View):
+<<<<<<< HEAD
     def __init__(self, bot, invoker: discord.User, target: discord.User, user_data, all_info, tradable, restricted, filter_type="All"):
         super().__init__(timeout=180)
         self.bot = bot
         self.invoker = invoker
         self.target = target
         self.user = target
+=======
+    def __init__(self, bot, user: discord.User, user_data, all_info, tradable, restricted, filter_type="All"):
+        super().__init__(timeout=180)
+        self.bot = bot
+        self.user = user
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         self.user_data = user_data
         self.all_info = all_info
         self.tradable = tradable
@@ -30,13 +37,21 @@ class CollListView(discord.ui.View):
         self.filter_type = filter_type
         self.page = 0
         self.per_page = 15
+<<<<<<< HEAD
         self.options = ["All", "Owned", "Not Owned", "Tradable", "Not Tradable", "Owner-only"]
+=======
+        self.options = ["All", "Owned", "Not Owned", "Tradable", "Owner-only"]
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
         self.add_item(CollFilterDropdown(self))
         self.add_item(CollPaginateButton(self, direction="backward"))
         self.add_item(CollPaginateButton(self, direction="forward"))
 
     def get_filtered(self):
+<<<<<<< HEAD
+=======
+        # All keys from combined info
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         all_keys = self.all_info.keys()
         data = {}
         if self.filter_type == "Owned":
@@ -45,14 +60,22 @@ class CollListView(discord.ui.View):
             data = {k: 0 for k in all_keys if k not in self.user_data or self.user_data[k] == 0}
         elif self.filter_type == "Tradable":
             data = {k: self.user_data.get(k, 0) for k in self.tradable}
+<<<<<<< HEAD
         elif self.filter_type == "Not Tradable":  # NEW FILTER
             not_tradable_keys = [k for k in self.all_info if k not in self.tradable and k not in self.restricted]
             data = {k: self.user_data.get(k, 0) for k in not_tradable_keys}
+=======
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         elif self.filter_type == "Owner-only":
             data = {k: self.user_data.get(k, 0) for k in self.restricted}
         else:
             data = {k: self.user_data.get(k, 0) for k in all_keys}
+<<<<<<< HEAD
 
+=======
+        
+        # Sort by count (descending)
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         sorted_data = dict(sorted(data.items(), key=lambda item: item[1], reverse=True))
         return sorted_data
 
@@ -85,15 +108,28 @@ class CollListView(discord.ui.View):
         embed.set_footer(text=f"Sorted by: {self.filter_type} • Page {self.page + 1}/{total_pages}")
         return embed
 
+<<<<<<< HEAD
 class CollFilterDropdown(discord.ui.Select):
     def __init__(self, view: CollListView):
         options = [discord.SelectOption(label=label, value=label) for label in view.options]
+=======
+
+class CollFilterDropdown(discord.ui.Select):
+    def __init__(self, view: CollListView):
+        options = [
+            discord.SelectOption(label=label, value=label)
+            for label in view.options
+        ]
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         super().__init__(placeholder="Filter collectibles...", options=options)
         self.view_ref = view
 
     async def callback(self, interaction: discord.Interaction):
+<<<<<<< HEAD
         if interaction.user.id != self.view_ref.invoker.id:
             return await interaction.response.send_message("<:ac_crossmark:1399650396322005002> You can't use this menu.", ephemeral=True)
+=======
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         self.view_ref.filter_type = self.values[0]
         self.view_ref.page = 0
         await interaction.response.edit_message(embed=self.view_ref.get_embed(), view=self.view_ref)
@@ -106,9 +142,12 @@ class CollPaginateButton(discord.ui.Button):
         self.direction = direction
 
     async def callback(self, interaction: discord.Interaction):
+<<<<<<< HEAD
         if interaction.user.id != self.view_ref.invoker.id:
             return await interaction.response.send_message("<:ac_crossmark:1399650396322005002> You can't use this menu.", ephemeral=True)
 
+=======
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         total = len(self.view_ref.get_filtered())
         max_page = max((total - 1) // self.view_ref.per_page, 0)
 
@@ -145,6 +184,7 @@ class ListCollectibles(commands.Cog):
         member = user or ctx.author
         user_items = self.get_user_collectibles(member.id)
         view = CollListView(
+<<<<<<< HEAD
             bot=self.bot,
             invoker=ctx.author,
             target=member,
@@ -152,6 +192,14 @@ class ListCollectibles(commands.Cog):
             all_info=self.get_all_info(),
             tradable=load_json(TRADABLE_FILE),
             restricted=load_json(RESTRICTED_FILE),
+=======
+            self.bot,
+            member,
+            user_items,
+            self.get_all_info(),
+            load_json(TRADABLE_FILE),
+            load_json(RESTRICTED_FILE),
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         )
         await ctx.send(embed=view.get_embed(), view=view)
 
@@ -160,6 +208,7 @@ class ListCollectibles(commands.Cog):
         member = user or interaction.user
         user_items = self.get_user_collectibles(member.id)
         view = CollListView(
+<<<<<<< HEAD
             bot=self.bot,
             invoker=interaction.user,
             target=member,
@@ -167,6 +216,14 @@ class ListCollectibles(commands.Cog):
             all_info=self.get_all_info(),
             tradable=load_json(TRADABLE_FILE),
             restricted=load_json(RESTRICTED_FILE),
+=======
+            self.bot,
+            member,
+            user_items,
+            self.get_all_info(),
+            load_json(TRADABLE_FILE),
+            load_json(RESTRICTED_FILE),
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         )
         await interaction.response.send_message(embed=view.get_embed(), view=view)
 

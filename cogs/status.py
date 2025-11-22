@@ -6,7 +6,11 @@ import datetime
 class Status(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+<<<<<<< HEAD
         self.start_time = datetime.datetime.utcnow()
+=======
+        self.start_time = datetime.datetime.utcnow()  # Track when bot started
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         self.status_cycle = itertools.cycle(self.generate_status_messages())
         self.status_loop.start()
 

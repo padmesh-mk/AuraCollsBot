@@ -20,6 +20,10 @@ class BotPingResponder(commands.Cog):
         if message.author.bot or not message.guild:
             return
 
+<<<<<<< HEAD
+=======
+        # Respond only if the message is just the bot mention
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         if message.content.strip() == self.bot.user.mention:
             prefixes = self.get_prefixes(message.guild.id)
             prefix_str = ', '.join(f'`{p}`' for p in prefixes)

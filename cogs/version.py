@@ -36,12 +36,20 @@ class Version(commands.Cog):
             changelog = data["changelog"]
             for i in range(0, len(changelog), 5):
             	embed.add_field(
+<<<<<<< HEAD
                 	name="Recent Changes" if i == 0 else " ",
+=======
+                	name="Recent Changes" if i == 0 else "Continued",
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
                 	value="\n".join(changelog[i:i + 5]),
                 	inline=False
             )
 
+<<<<<<< HEAD
         embed.set_footer(text="Upgrade to Premium to support the bot.")
+=======
+        embed.set_footer(text="Thank you for using AuraColls")
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         await interaction.response.send_message(embed=embed)
 
 async def setup(bot):

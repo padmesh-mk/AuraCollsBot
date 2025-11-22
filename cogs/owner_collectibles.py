@@ -6,8 +6,13 @@ import time
 
 COLL_FILE = "collectibles.json"
 RESTRICTED_COLL_FILE = "restrictedcoll.json"
+<<<<<<< HEAD
 POINTS_FILE = "coins.json"
 USER_COOLDOWNS = {} 
+=======
+POINTS_FILE = "points.json"
+USER_COOLDOWNS = {}  # Stores cooldowns in the format: {"user_id:coll": timestamp}
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
 def load_restricted_colls():
     if not os.path.exists(RESTRICTED_COLL_FILE):
@@ -71,7 +76,11 @@ class RestrictedCollectibles(commands.Cog):
         owner_id = int(self.restricted_colls[collectible]["owner_id"])
         if sender.id != owner_id:
             return await ctx.reply(
+<<<<<<< HEAD
                 f"**<:ac_crossmark:1399650396322005002> | {sender.display_name}**, only the owner of this collectible can send {collectible}s!",
+=======
+                f"**🚫 | {sender.name}**, only the owner of this collectible can send {collectible}s!",
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
                 delete_after=3
             )
 
@@ -81,7 +90,11 @@ class RestrictedCollectibles(commands.Cog):
         if key in USER_COOLDOWNS and now < USER_COOLDOWNS[key]:
             retry_after = USER_COOLDOWNS[key]
             return await ctx.reply(
+<<<<<<< HEAD
                 f"**⏱ | {sender.display_name}**! Slow down and try the command again **<t:{retry_after}:R>**",
+=======
+                f"**⏱ | {sender.name}**! Slow down and try the command again **<t:{retry_after}:R>**",
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
                 delete_after=retry_after - now
             )
 
@@ -91,15 +104,27 @@ class RestrictedCollectibles(commands.Cog):
 
         if data[str(sender.id)][collectible] < 1:
             await ctx.reply(
+<<<<<<< HEAD
                 f"**<:ap_crossmark:1382760353904988230> | {sender.display_name}**, you do not have any {collectible}s! >:c",
+=======
+                f"**<:ap_crossmark:1382760353904988230> | {sender.name}**, you do not have any {collectible}s! >:c",
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
                 delete_after=3
             )
             return await ctx.message.delete(delay=3)
 
+<<<<<<< HEAD
+=======
+        # Duplication-style logic
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         data[str(sender.id)][collectible] -= 1
         data[str(target.id)][collectible] += 2
         save_data(data)
 
+<<<<<<< HEAD
+=======
+        # Add 1 point to sender
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         points = load_points()
         points = self.ensure_points_user(points, sender.id)
         points[str(sender.id)] += 1
@@ -109,7 +134,11 @@ class RestrictedCollectibles(commands.Cog):
 
         emoji = self.restricted_colls[collectible]["emoji"]
         name = self.restricted_colls[collectible]["name"]
+<<<<<<< HEAD
         await ctx.send(f"{emoji} **| {sender.display_name}** sent **{target.name}** 2 {name}!")
+=======
+        await ctx.send(f"{emoji} **| {sender.name}** sent **{target.name}** 2 {name}!")
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
     def _create_command(self, collectible_key):
         @commands.command(name=collectible_key)
@@ -123,7 +152,11 @@ class RestrictedCollectibles(commands.Cog):
                 emoji = self.restricted_colls[collectible_key]["emoji"]
                 name = self.restricted_colls[collectible_key]["name"]
                 return await ctx.reply(
+<<<<<<< HEAD
                     f"{emoji} **| {sender.display_name}**, you currently have {amount} {name}!"
+=======
+                    f"{emoji} **| {sender.name}**, you currently have {amount} {name}!"
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
                 )
 
             await self.send_restricted_coll(ctx, collectible_key, target)

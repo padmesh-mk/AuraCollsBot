@@ -2,7 +2,11 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 import time
+<<<<<<< HEAD
 import random 
+=======
+import random  # Replace with actual DB latency fetch if available
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
 class Ping(commands.Cog):
     def __init__(self, bot):
@@ -30,6 +34,10 @@ class Ping(commands.Cog):
         websocket_latency = round(self.bot.latency * 1000, 2)
         api_latency = round((end - start) * 1000, 2)
 
+<<<<<<< HEAD
+=======
+        # Replace this with actual MongoDB latency if you have it
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         mongo_latency = round(random.uniform(100, 200), 2)
 
         status = self.get_status_emoji(websocket_latency)

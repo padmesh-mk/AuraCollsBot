@@ -12,8 +12,11 @@ collectibles_data = load_json("collectibles.json")
 info_data = load_json("collectible_info.json")
 restricted_data = load_json("restrictedcoll.json")
 tradable_data = load_json("tradablecoll.json")
+<<<<<<< HEAD
 orbs_data = load_json("orbs.json")    
 orb_info = load_json("orb.json")     
+=======
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
 class ViewCollectible(commands.Cog):
     def __init__(self, bot):
@@ -43,6 +46,10 @@ class ViewCollectible(commands.Cog):
             title=f"{emoji} {display_name}",
             color=0xFF6B6B
         )
+<<<<<<< HEAD
+=======
+
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         embed.set_author(name=str(user), icon_url=user.display_avatar.url)
         embed.add_field(name="Owned", value=f"`{count}`", inline=True)
 
@@ -60,6 +67,7 @@ class ViewCollectible(commands.Cog):
 
         return embed
 
+<<<<<<< HEAD
     def get_orb_details(self, name: str):
         name = name.lower()
         for key, value in orb_info.items():
@@ -121,6 +129,33 @@ class ViewCollectible(commands.Cog):
             return await ctx.send(embed=embed)
 
         await ctx.send("<:ap_crossmark:1382760353904988230> | That collectible or orb does not exist.")
+=======
+    # Slash command
+    @app_commands.command(name="view", description="View details about a specific collectible")
+    @app_commands.describe(collectible="Name of the collectible")
+    async def view_slash(self, interaction: discord.Interaction, collectible: str):
+        key, details, source_type = self.get_collectible_details(collectible)
+        if not details:
+            return await interaction.response.send_message("<:ap_crossmark:1382760353904988230> | That collectible does not exist.", ephemeral=True)
+
+        count = self.get_user_count(interaction.user.id, key)
+        embed = self.build_embed(interaction.user, key, details, source_type, count)
+        await interaction.response.send_message(embed=embed)
+
+    # Prefix command
+    @commands.command(name="view")
+    async def view_prefix(self, ctx, *, collectible: str = None):
+        if not collectible:
+            return await ctx.send("<:ap_crossmark:1382760353904988230> | Please provide a collectible name to view.")
+
+        key, details, source_type = self.get_collectible_details(collectible)
+        if not details:
+            return await ctx.send("<:ap_crossmark:1382760353904988230> | That collectible does not exist.")
+
+        count = self.get_user_count(ctx.author.id, key)
+        embed = self.build_embed(ctx.author, key, details, source_type, count)
+        await ctx.send(embed=embed)
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
 async def setup(bot):
     await bot.add_cog(ViewCollectible(bot))

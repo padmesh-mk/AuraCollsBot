@@ -3,7 +3,12 @@ from discord.ext import commands, tasks
 from datetime import datetime, timedelta
 from votes import get_leaderboard
 
+<<<<<<< HEAD
 CHANNEL_ID = 1399253626798604338  
+=======
+# 🔧 Set your target channel ID here
+CHANNEL_ID = 1399253626798604338  # Replace with your channel ID
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
 class VoteLeaderboardSender(commands.Cog):
     def __init__(self, bot):
@@ -16,12 +21,20 @@ class VoteLeaderboardSender(commands.Cog):
 
     @tasks.loop(minutes=1)
     async def send_lb_daily(self):
+<<<<<<< HEAD
         now = datetime.utcnow() + timedelta(hours=5, minutes=30) 
+=======
+        now = datetime.utcnow() + timedelta(hours=5, minutes=30)  # Convert to IST
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         if now.hour == 9 and now.minute == 0 and not self.sent_today:
             await self.send_leaderboard()
             self.sent_today = True
         elif now.minute != 0:
+<<<<<<< HEAD
             self.sent_today = False
+=======
+            self.sent_today = False  # Reset once we're past the 9:00 minute
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
 
     async def send_leaderboard(self):
         channel = self.bot.get_channel(CHANNEL_ID)
@@ -51,6 +64,10 @@ class VoteLeaderboardSender(commands.Cog):
 
         embed.add_field(name="Top 10 Voters", value="\n".join(leaderboard_lines), inline=False)
 
+<<<<<<< HEAD
+=======
+        # ⏰ Add IST timestamp
+>>>>>>> fc0bbefadbbd3ed7bedc2f1ec1bc2d359c6d9c47
         ist_now = datetime.utcnow() + timedelta(hours=5, minutes=30)
         embed.set_footer(text=f"Last updated: {ist_now.strftime('%Y-%m-%d %I:%M %p IST')} • Next update in 24 hours")
 
